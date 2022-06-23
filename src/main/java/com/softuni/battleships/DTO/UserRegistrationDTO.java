@@ -13,7 +13,7 @@ public class UserRegistrationDTO {
 
     @Size(min = 5, max = 20)
     @NotBlank
-    private String fullname;
+    private String fullName;
 
     @Email
     @NotBlank
@@ -37,12 +37,12 @@ public class UserRegistrationDTO {
         this.username = username;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -73,7 +73,7 @@ public class UserRegistrationDTO {
     public String toString() {
         return "UserRegistrationDTO{" +
                 "username='" + username + '\'' +
-                ", fullname='" + fullname + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
