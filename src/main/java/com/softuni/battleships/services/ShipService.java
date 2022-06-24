@@ -1,6 +1,7 @@
 package com.softuni.battleships.services;
 
 import com.softuni.battleships.DTO.CreateShipDTO;
+import com.softuni.battleships.DTO.ShipDTO;
 import com.softuni.battleships.models.Category;
 import com.softuni.battleships.models.Ship;
 import com.softuni.battleships.models.ShipType;
@@ -11,7 +12,9 @@ import com.softuni.battleships.repositories.UserRepository;
 import com.softuni.battleships.session.LoggedUser;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ShipService {
@@ -56,5 +59,14 @@ public class ShipService {
         this.shipRepository.save(ship);
 
         return true;
+    }
+
+    public List<ShipDTO> getShipsOwnedBy(long ownerId) {
+        return this.shipRepository.findByUserId(ownerId)
+                .stream().map(ShipDTO::new).collect(Collectors.toList());
+    }
+
+    public List<ShipDTO> getShipsNotOwnedBy(long enemyId) {
+        return null;
     }
 }

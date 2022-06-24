@@ -2,6 +2,7 @@ package com.softuni.battleships.controllers;
 
 import com.softuni.battleships.DTO.CreateShipDTO;
 import com.softuni.battleships.services.ShipService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class ShipController {
 
     private final ShipService shipService;
 
+    @Autowired
     public ShipController(ShipService shipService) {
         this.shipService = shipService;
     }
