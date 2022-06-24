@@ -26,6 +26,11 @@ public class UserController {
         return new UserRegistrationDTO();
     }
 
+    @ModelAttribute("loginDTO")
+    public LoginDTO loginDTO() {
+        return new LoginDTO();
+    }
+
     @GetMapping("/register")
     public String register() {
         return "register";
@@ -40,10 +45,10 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registrationDTO", registrationDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationDTO", bindingResult);
 
-            return "redirect: /register";
+            return "redirect:/register";
         }
 
-        return "redirect: /login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -60,10 +65,18 @@ public class UserController {
             redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginDTO", bindingResult);
 
-            return "redirect: /login";
+            return "redirect:/login";
         }
 
-        return "redirect: /home";
+        if (!this.userService.login(loginDTO)) {
+            redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
+            redirectAttributes.addFlashAttribute("badCredentials", true);
+
+            return "redirect:/login";
+
+        }
+
+        return "redirect:/home";
 
     }
 }

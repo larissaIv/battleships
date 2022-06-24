@@ -1,8 +1,10 @@
 package com.softuni.battleships.services;
 
+import com.softuni.battleships.DTO.LoginDTO;
 import com.softuni.battleships.DTO.UserRegistrationDTO;
 import com.softuni.battleships.models.User;
 import com.softuni.battleships.repositories.UserRepository;
+import com.softuni.battleships.session.LoggedUser;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,9 +13,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final LoggedUser userSession;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, LoggedUser userSession) {
         this.userRepository = userRepository;
+        this.userSession = userSession;
     }
 
     public boolean register(UserRegistrationDTO registrationDTO) {
@@ -39,6 +43,17 @@ public class UserService {
 
         this.userRepository.save(user);
 
+        return true;
+    }
+
+    public boolean login(LoginDTO loginDTO) {
+        Optional<User> user = this.userRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+
+        if (user.isEmpty()) {
+            return false;
+        }
+
+        this.userSession.login(user.get());
         return true;
     }
 }

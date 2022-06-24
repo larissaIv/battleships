@@ -90,20 +90,9 @@ public class Ship {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User owner) {
+        this.user = owner;
     }
 
-    @Override
-    public String toString() {
-        return "Ship{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", health=" + health +
-                ", power=" + power +
-                ", created=" + created +
-                ", category=" + category +
-                ", user=" + user +
-                '}';
-    }
+
 }
