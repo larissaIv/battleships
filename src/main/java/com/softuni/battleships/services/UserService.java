@@ -56,4 +56,16 @@ public class UserService {
         this.userSession.login(user.get());
         return true;
     }
+
+    public boolean isLoggedIn() {
+        return this.userSession.getId() > 0;
+    }
+
+    public void logout() {
+        this.userSession.logout();
+    }
+
+    public long getLoggedUserId() {
+        return this.userSession.getId();
+    }
 }

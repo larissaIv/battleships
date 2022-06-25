@@ -12,6 +12,7 @@ import com.softuni.battleships.repositories.UserRepository;
 import com.softuni.battleships.session.LoggedUser;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,6 +68,12 @@ public class ShipService {
     }
 
     public List<ShipDTO> getShipsNotOwnedBy(long enemyId) {
-        return null;
+        return this.shipRepository.findByUserIdNot(enemyId)
+                .stream().map(ShipDTO::new).collect(Collectors.toList());
+    }
+
+    public List<ShipDTO> getAllSorted() {
+        return this.shipRepository.findAllByOrderByHealthAscNameDescPowerAsc()
+                .stream().map(ShipDTO::new).collect(Collectors.toList());
     }
 }

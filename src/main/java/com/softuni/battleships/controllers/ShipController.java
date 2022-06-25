@@ -2,6 +2,7 @@ package com.softuni.battleships.controllers;
 
 import com.softuni.battleships.DTO.CreateShipDTO;
 import com.softuni.battleships.services.ShipService;
+import com.softuni.battleships.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,10 +17,12 @@ import javax.validation.Valid;
 public class ShipController {
 
     private final ShipService shipService;
+    private final UserService userService;
 
     @Autowired
-    public ShipController(ShipService shipService) {
+    public ShipController(ShipService shipService, UserService userService) {
         this.shipService = shipService;
+        this.userService = userService;
     }
 
     @ModelAttribute("createShipDTO")
@@ -29,6 +32,10 @@ public class ShipController {
 
     @GetMapping("/ships/add")
     public String ships() {
+        if (!this.userService.isLoggedIn()) {
+            return "redirect:/";
+        }
+
         return "ship-add";
     }
 
@@ -36,6 +43,11 @@ public class ShipController {
     public String ships(@Valid CreateShipDTO createShipDTO,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes) {
+
+        if (!this.userService.isLoggedIn()) {
+            return "redirect:/";
+        }
+
 
         if (bindingResult.hasErrors() || !this.shipService.create(createShipDTO)) {
             redirectAttributes.addFlashAttribute("createShipDTO", createShipDTO);
